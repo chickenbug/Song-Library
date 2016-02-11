@@ -28,7 +28,7 @@ public class SongLib extends Application {
 	private ObservableList<Song> songData = FXCollections.observableArrayList();
 
 	public SongLib(){
-		load_data("/src/songlib/model/datafile.txt");
+		load_data("src/songlib/model/datafile.txt");
 		songData.add(new Song("Lose Yourself","Eminem","Curtain Call", "2005"));
 		songData.add(new Song("All I Do Is Win", "DJ Khaled", "All I Do Is Win", "2012"));
 	}
@@ -49,13 +49,13 @@ public class SongLib extends Application {
 	    	System.out.println("Datafile Found: attempting to load data"); 
 	        List<String> lines = Files.readAllLines(path);
 	        for (String line : lines) {
-	        	String[] values = line.split("[,]");// deliminate by commas
+	        	String[] values = line.split("[,]");// Delineate by commas
 	        	if(values.length != 4){ 
 	        		System.out.println("bad input line");
 	        		continue;
 	        	}
 	        	for(int i = 0; i<values.length; i++){ // clean up whitespace
-	        		 values[i] = values[i].replaceAll("\\s","");
+	        		 values[i] = values[i].trim();
 	        	}
 	        	if(values[0].compareTo("") == 0 || values[1].compareTo("") == 0){ 
 	        		System.out.println("Song or Title missing: Continuing to next line");
