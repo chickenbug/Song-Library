@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,6 +30,7 @@ public class SongController {
 
 	// Reference to the main application.
 	private SongLib songLib;
+	private Stage dialogStage;
 
 	/**
 	 * The constructor.
@@ -43,7 +45,6 @@ public class SongController {
 	 */
 	@FXML
 	private void initialize() {
-		songTable.sort();
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
 		showSongDetails(null);
@@ -99,12 +100,37 @@ public class SongController {
 		}
 	}
 
+	public void setDialogStage(Stage dialogStage) {
+		this.dialogStage = dialogStage;
+	}
+
 	@FXML
 	private void handleNewSong() {
 		Song tempSong = new Song();
 		boolean okClicked = songLib.showSongEditDialog(tempSong);
+		boolean duplicate = false;
 		if (okClicked) {
-			songLib.getSongData().add(tempSong);
+			for(Song s : songLib.getSongData()){
+				String n = s.getName();
+				String a = s.getArtist();
+				System.out.println(n + " " + a);
+				System.out.println(tempSong.getName() + " " + tempSong.getArtist());
+				if(n.toLowerCase().equals(tempSong.getName().toLowerCase()) &&
+						(a.toLowerCase().equals(tempSong.getArtist().toLowerCase()))){
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.initOwner(dialogStage);
+					alert.setTitle("Invalid Fields");
+					alert.setHeaderText("Please correct invalid fields");
+					alert.setContentText("Duplicate: Song already in list!\n");
+
+					alert.showAndWait();
+					duplicate = true;
+					break;
+				}
+			}
+			if(!duplicate){
+				songLib.getSongData().add(tempSong);
+			}
 			FXCollections.sort(songLib.getSongData());
 		}
 	}

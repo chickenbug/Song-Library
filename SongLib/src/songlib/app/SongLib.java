@@ -28,8 +28,7 @@ public class SongLib extends Application {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 	private ObservableList<Song> songData = FXCollections.observableArrayList();
-	private String datapath = "src/songlib/model/datafile.txt";
-
+	private String datapath = "src/songlib/model/datafile.txt";	
 	public ObservableList<Song> getSongData(){
 		return songData;
 	}
@@ -156,6 +155,7 @@ public class SongLib extends Application {
 	        SongEditDialogController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
 	        controller.setSong(song);
+	        controller.setSongLib(this);
 
 	        // Show the dialog and wait until the user closes it
 	        dialogStage.showAndWait();

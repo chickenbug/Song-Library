@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import songlib.app.SongLib;
 import songlib.model.Song;
 
 public class SongEditDialogController {
@@ -21,6 +22,9 @@ public class SongEditDialogController {
 	private Stage dialogStage;
 	private Song song;
 	private boolean okClicked = false;
+	private SongLib songLib;
+
+
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -37,6 +41,10 @@ public class SongEditDialogController {
 	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
+	}
+
+	public void setSongLib(SongLib songLib) {
+		this.songLib = songLib;
 	}
 
 	/**
@@ -69,15 +77,37 @@ public class SongEditDialogController {
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
-			song.setName(nameField.getText());
-			song.setArtist(artistField.getText());
-			song.setAlbum(albumField.getText());
-			song.setYear(yearField.getText());
+			boolean duplicate = false;
+			for(Song s : songLib.getSongData()){
+				String n = s.getName();
+				String a = s.getArtist();
 
-			okClicked = true;
+				System.out.println(n + " "+ a);
+				if(n.toLowerCase().equals(nameField.getText().toLowerCase()) &&
+						(a.toLowerCase().equals(artistField.getText().toLowerCase()))){
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.initOwner(dialogStage);
+					alert.setTitle("Invalid Fields");
+					alert.setHeaderText("Please correct invalid fields");
+					alert.setContentText("Duplicate: Song already in list!\n");
+
+					alert.showAndWait();
+					duplicate = true;
+					break;
+				}
+			}
+			if(!duplicate){
+				song.setName(nameField.getText());
+				song.setArtist(artistField.getText());
+				song.setAlbum(albumField.getText());
+				song.setYear(yearField.getText());
+				okClicked = true;
+			}
+
 			dialogStage.close();
 		}
 	}
+
 
 	/**
 	 * Called when the user clicks cancel.
@@ -94,7 +124,6 @@ public class SongEditDialogController {
 	 */
 	private boolean isInputValid() {
 		String errorMessage = "";
-
 		if (nameField.getText() == null || nameField.getText().length() == 0) {
 			errorMessage += "No valid name!\n"; 
 		}
@@ -104,7 +133,8 @@ public class SongEditDialogController {
 
 		if (errorMessage.length() == 0) {
 			return true;
-		} else {
+		} 
+		else {
 			// Show the error message.
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.initOwner(dialogStage);
