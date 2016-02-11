@@ -27,7 +27,7 @@ public class Song implements Comparable<Song>{
 	}
 	
 	public int compareTo(Song song){
-		return name.get().compareTo(song.name.get());
+		return name.get().toLowerCase().compareTo(song.name.get().toLowerCase());
 	}
 	
 	public String getName(){
