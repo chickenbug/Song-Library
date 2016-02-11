@@ -182,9 +182,13 @@ public class SongLib extends Application {
 
 	        SongDeleteDialogController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
-
 	        dialogStage.showAndWait();
-
+	        FXCollections.sort(songData);
+	        
+	        for(Song axe : songData){
+	    		System.out.println(axe.getName());
+	    	}
+	        
 	        return controller.isOkClicked();
 	    } catch (IOException e) {
 	        e.printStackTrace();

@@ -1,6 +1,7 @@
 //Tim Goetjen and Kinh Hoang
 package songlib.view;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -104,6 +105,7 @@ public class SongController {
 		boolean okClicked = songLib.showSongEditDialog(tempSong);
 		if (okClicked) {
 			songLib.getSongData().add(tempSong);
+			FXCollections.sort(songLib.getSongData());
 		}
 	}
 
@@ -118,6 +120,7 @@ public class SongController {
 			boolean okClicked = songLib.showSongEditDialog(selectedSong);
 			if (okClicked) {
 				showSongDetails(selectedSong);
+				FXCollections.sort(songLib.getSongData());
 			}
 
 		} else {
