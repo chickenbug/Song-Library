@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="songlib.view.SongEditDialogController">
+   <children>
+      <ButtonBar layoutX="193.0" layoutY="246.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
+        <buttons>
+          <Button mnemonicParsing="false" onAction="#handleOk" text="OK" />
+            <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+      <GridPane layoutX="32.0" layoutY="28.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Name" />
+            <Label text="Artist" GridPane.rowIndex="1" />
+            <Label text="Album" GridPane.rowIndex="2" />
+            <Label text="Year" GridPane.rowIndex="3" />
+            <TextField fx:id="nameField" GridPane.columnIndex="1" />
+            <TextField fx:id="artistField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="albumField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="yearField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
