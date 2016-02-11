@@ -73,4 +73,15 @@ public class Song {
 	public StringProperty yearProperty(){
 		return year;
 	}
+	
+	public String toData(){
+		String s = name.get() + "," + artist.get() + ",";
+		
+		if(album.get().compareTo("")!= 0) s = s.concat(album.get()+ ",");
+		else s  = s.concat(" ,");
+		if(year.get().compareTo("") != 0) s = s.concat(year.get());
+		else s = s.concat(" ");
+		
+		return s;
+	}
 }
