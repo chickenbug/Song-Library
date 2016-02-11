@@ -1,8 +1,10 @@
 //Tim Goetjen and Kinh Hoang
 package songlib.app;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,12 +28,8 @@ public class SongLib extends Application {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 	private ObservableList<Song> songData = FXCollections.observableArrayList();
+	private String datapath = "src/songlib/model/datafile.txt";
 
-	public SongLib(){
-		load_data("src/songlib/model/datafile.txt");
-		songData.add(new Song("Lose Yourself","Eminem","Curtain Call", "2005"));
-		songData.add(new Song("All I Do Is Win", "DJ Khaled", "All I Do Is Win", "2012"));
-	}
 	public ObservableList<Song> getSongData(){
 		return songData;
 	}
@@ -51,14 +49,14 @@ public class SongLib extends Application {
 	        for (String line : lines) {
 	        	String[] values = line.split("[,]");// Delineate by commas
 	        	if(values.length != 4){ 
-	        		System.out.println("bad input line");
+	        		System.out.println("Bad input line: Continuing to next line");
 	        		continue;
 	        	}
 	        	for(int i = 0; i<values.length; i++){ // clean up whitespace
 	        		 values[i] = values[i].trim();
 	        	}
 	        	if(values[0].compareTo("") == 0 || values[1].compareTo("") == 0){ 
-	        		System.out.println("Song or Title missing: Continuing to next line");
+	        		System.out.println("Title or Artist missing: Continuing to next line");
 	        		continue;
 	        	}
 	        	songData.add(new Song(values[0], values[1],values[2], values[3]));
@@ -73,17 +71,36 @@ public class SongLib extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("My Song Library");		
 		this.primaryStage.setResizable(false);
+		load_data(datapath);
 		
 		initRootLayout();
 		
 		showSongView();
 	}
-	
+
 	@Override
 	public void stop(){
 	    System.out.println("Gotta save mang");
-	    // Delete file 
-	    // Save file
+	    
+	    File datafile = new File(datapath);
+	    String filePath = datafile.getAbsolutePath();
+	    Path path = Paths.get(filePath);  
+	    try{
+	    	Files.deleteIfExists(path);
+	    	Charset charset = Charset.forName("US-ASCII");
+	    	BufferedWriter writer = Files.newBufferedWriter(path, charset);
+	    	for(Song song : songData){
+	    		String s = song.toData();
+	    		writer.write(s, 0, s.length());
+	    		writer.newLine();
+	    		System.out.println(s);
+	    	}
+	    	writer.close();
+	    }
+	    catch(IOException e){
+	    	System.out.println(e);
+	    }
+	    
 	}
 
 	public void showSongView() {
