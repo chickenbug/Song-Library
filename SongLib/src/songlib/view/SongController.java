@@ -63,6 +63,10 @@ public class SongController {
 
 		// Add observable list data to the table
 		songTable.setItems(songLib.getSongData());
+		
+		if(songLib.getSongData().size()!=0){
+			songTable.getSelectionModel().select(0);
+		}
 	}
 
 	private void showSongDetails(Song song){
@@ -87,6 +91,7 @@ public class SongController {
 		if (selectedIndex >= 0) {
 			boolean okClicked = songLib.showSongDeleteDialog(selectedSong);
 			if (okClicked)
+				songTable.getSelectionModel().selectBelowCell();
 				songTable.getItems().remove(selectedIndex);
 		} else {
 			// Nothing selected.
@@ -130,8 +135,9 @@ public class SongController {
 			}
 			if(!duplicate){
 				songLib.getSongData().add(tempSong);
+				songTable.getSelectionModel().select(tempSong);
+				FXCollections.sort(songLib.getSongData());
 			}
-			FXCollections.sort(songLib.getSongData());
 		}
 	}
 

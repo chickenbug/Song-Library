@@ -29,6 +29,7 @@ public class SongLib extends Application {
 	private BorderPane rootLayout;
 	private ObservableList<Song> songData = FXCollections.observableArrayList();
 	private String datapath = "src/songlib/model/datafile.txt";	
+	
 	public ObservableList<Song> getSongData(){
 		return songData;
 	}
