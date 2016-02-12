@@ -55,19 +55,23 @@ public class SongEditDialogController {
 			for(Song s : songLib.getSongData()){
 				String n = s.getName();
 				String a = s.getArtist();
+				if(song.getName().equals(nameField.getText()) && song.getArtist().equals(artistField.getText())){
+					okClicked = true;
+				}
+				else{
+					System.out.println(n + " " + a);
+					if(n.toLowerCase().equals(nameField.getText().toLowerCase()) &&
+							(a.toLowerCase().equals(artistField.getText().toLowerCase()))){
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.initOwner(dialogStage);
+						alert.setTitle("Invalid Fields");
+						alert.setHeaderText("Please correct invalid fields");
+						alert.setContentText("Duplicate: Song already in list!\n");
 
-				System.out.println(n + " "+ a);
-				if(n.toLowerCase().equals(nameField.getText().toLowerCase()) &&
-						(a.toLowerCase().equals(artistField.getText().toLowerCase()))){
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.initOwner(dialogStage);
-					alert.setTitle("Invalid Fields");
-					alert.setHeaderText("Please correct invalid fields");
-					alert.setContentText("Duplicate: Song already in list!\n");
-
-					alert.showAndWait();
-					duplicate = true;
-					break;
+						alert.showAndWait();
+						duplicate = true;
+						break;
+					}
 				}
 			}
 			if(!duplicate){
