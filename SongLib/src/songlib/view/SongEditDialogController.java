@@ -24,21 +24,6 @@ public class SongEditDialogController {
 	private boolean okClicked = false;
 	private SongLib songLib;
 
-
-
-	/**
-	 * Initializes the controller class. This method is automatically called
-	 * after the fxml file has been loaded.
-	 */
-	@FXML
-	private void initialize() {
-	}
-
-	/**
-	 * Sets the stage of this dialog.
-	 * 
-	 * @param dialogStage
-	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
@@ -47,12 +32,7 @@ public class SongEditDialogController {
 		this.songLib = songLib;
 	}
 
-	/**
-	 * Sets the person to be edited in the dialog.
-	 * 
-	 * 
-	 * @param person
-	 */
+	// Sets fields in the edit dialog
 	public void setSong(Song song) {
 		this.song = song;
 
@@ -62,18 +42,12 @@ public class SongEditDialogController {
 		yearField.setText(song.getYear());
 	}
 
-	/**
-	 * Returns true if the user clicked OK, false otherwise.
-	 * 
-	 * @return
-	 */
+
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 
-	/**
-	 * Called when the user clicks ok.
-	 */
+	// Called when the user hits OK
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
@@ -119,8 +93,6 @@ public class SongEditDialogController {
 
 	/**
 	 * Validates the user input in the text fields.
-	 * 
-	 * @return true if the input is valid
 	 */
 	private boolean isInputValid() {
 		String errorMessage = "";

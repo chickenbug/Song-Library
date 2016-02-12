@@ -34,7 +34,8 @@ public class SongLib extends Application {
 		return songData;
 	}
 	
-	private void load_data(String pathname){ // Attempts to load a program datafile if one exists
+	// Attempts to load a program datafile if one exists
+	private void load_data(String pathname){ 
 		File datafile = new File(pathname);
 		if(!datafile.exists()){
 			System.out.println("No Datafile exists continuing to program");
@@ -67,6 +68,7 @@ public class SongLib extends Application {
 	    FXCollections.sort(songData);
 	}
 	
+	//Entry point for program
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
@@ -78,10 +80,11 @@ public class SongLib extends Application {
 		
 		showSongView();
 	}
-
+	
+	//Exit point. Saves the data into a datafile before terminating
 	@Override
 	public void stop(){
-	    System.out.println("Gotta save mang");
+	    System.out.println("Saving data to Datafile before closing");
 	    
 	    File datafile = new File(datapath);
 	    String filePath = datafile.getAbsolutePath();
@@ -94,7 +97,6 @@ public class SongLib extends Application {
 	    		String s = song.toData();
 	    		writer.write(s, 0, s.length());
 	    		writer.newLine();
-	    		System.out.println(s);
 	    	}
 	    	writer.close();
 	    }
@@ -185,10 +187,6 @@ public class SongLib extends Application {
 	        controller.setDialogStage(dialogStage);
 	        dialogStage.showAndWait();
 	        FXCollections.sort(songData);
-	        
-	        for(Song axe : songData){
-	    		System.out.println(axe.getName());
-	    	}
 	        
 	        return controller.isOkClicked();
 	    } catch (IOException e) {

@@ -32,17 +32,7 @@ public class SongController {
 	private SongLib songLib;
 	private Stage dialogStage;
 
-	/**
-	 * The constructor.
-	 * The constructor is called before the initialize() method.
-	 */
-	public SongController() {
-	}
-
-	/**
-	 * Initializes the controller class. This method is automatically called
-	 * after the fxml file has been loaded.
-	 */
+	// Sets up the controller class with listeners and table fields
 	@FXML
 	private void initialize() {
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
@@ -53,11 +43,8 @@ public class SongController {
 				oldValue, newValue) -> showSongDetails(newValue));
 	}
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * 
-	 * @param mainApp
-	 */
+	
+	//Is called by the main application to give a reference back to itself.
 	public void setSongLib(SongLib songLib) {
 		this.songLib = songLib;
 
@@ -69,6 +56,7 @@ public class SongController {
 		}
 	}
 
+	// Shows song details in main app
 	private void showSongDetails(Song song){
 		if(song!=null){
 			nameLabel.setText(song.getName());
@@ -84,6 +72,7 @@ public class SongController {
 		}
 	}
 
+	// Deletes the song
 	@FXML
 	private void handleDeleteSong(){
 		Song selectedSong = songTable.getSelectionModel().getSelectedItem();
@@ -109,6 +98,7 @@ public class SongController {
 		this.dialogStage = dialogStage;
 	}
 
+	// Adds a new song after validating uniqueness
 	@FXML
 	private void handleNewSong() {
 		Song tempSong = new Song();
@@ -118,8 +108,6 @@ public class SongController {
 			for(Song s : songLib.getSongData()){
 				String n = s.getName();
 				String a = s.getArtist();
-				System.out.println(n + " " + a);
-				System.out.println(tempSong.getName() + " " + tempSong.getArtist());
 				if(n.toLowerCase().equals(tempSong.getName().toLowerCase()) &&
 						(a.toLowerCase().equals(tempSong.getArtist().toLowerCase()))){
 					Alert alert = new Alert(AlertType.ERROR);
@@ -141,10 +129,7 @@ public class SongController {
 		}
 	}
 
-	/**
-	 * Called when the user clicks the edit button. Opens a dialog to edit
-	 * details for the selected person.
-	 */
+	// Opens a dialog to edit the song
 	@FXML
 	private void handleEditSong() {
 		Song selectedSong = songTable.getSelectionModel().getSelectedItem();
