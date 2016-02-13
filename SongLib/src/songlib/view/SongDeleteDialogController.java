@@ -1,3 +1,4 @@
+//Tim Goetjen and Kinh Hoang
 package songlib.view;
 
 import javafx.fxml.FXML;
